@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3528388492879421928}
   - component: {fileID: 529315027789311565}
   - component: {fileID: 2358890594676808327}
+  - component: {fileID: 8045015971925639920}
   m_Layer: 0
   m_Name: Platform
   m_TagString: Untagged
@@ -83,3 +84,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8045015971925639920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4304467141980535634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05b441b62bc50ce449639afd8ed44c87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUnlocked: 1
+  spawnPoints: []
+  collectableObjects: []
