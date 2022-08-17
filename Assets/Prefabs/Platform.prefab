@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 529315027789311565}
   - component: {fileID: 2358890594676808327}
   - component: {fileID: 8045015971925639920}
+  - component: {fileID: -1525401859623269917}
   m_Layer: 0
   m_Name: Platform
-  m_TagString: Untagged
+  m_TagString: PlatformUnlocked
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,3 +100,16 @@ MonoBehaviour:
   isUnlocked: 1
   spawnPoints: []
   collectableObjects: []
+--- !u!65 &-1525401859623269917
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4304467141980535634}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0203383, y: 0.020345896, z: 0.0034712192}
+  m_Center: {x: 0.000046979636, y: 0.000043865286, z: -0.00017550346}
