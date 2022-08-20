@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PickElement : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class PickElement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return; // To blocking interaction through UI 
+
         if (Input.touchCount == 1)
         {
             Touch touch = Input.GetTouch(0);
@@ -36,6 +39,7 @@ public class PickElement : MonoBehaviour
                         Debug.Log("Particle has been touched!");
                         _element = hitInfo.collider.gameObject;
                         Kanvas.SetActive(true);
+
                     }
                     if (hitInfo.collider.tag == "platform")
                     {

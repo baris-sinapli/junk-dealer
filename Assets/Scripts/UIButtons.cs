@@ -9,9 +9,9 @@ public class UIButtons : MonoBehaviour
     public void RestoreButtonPressed()
     {
         Debug.Log("Restored...");
-        SceneManager.LoadScene("Restoration");
-
         Destroy(Camera.main.GetComponent<PickElement>().Element);
+        SceneManager.LoadScene("Restoration");
+        
     }
 
     public void SellButtonPressed()
@@ -19,6 +19,7 @@ public class UIButtons : MonoBehaviour
         Debug.Log("Object selled...");
         Kanvas.SetActive(false);
         Destroy(Camera.main.GetComponent<PickElement>().Element);
+        
     }
 
     public void BuyPlatformButtonPressed()
@@ -29,6 +30,7 @@ public class UIButtons : MonoBehaviour
 
     public void SellRestoredButton()
     {
+        Debug.Log("Object selled after restoring...");
         SceneManager.LoadScene("Main");
     }
 }

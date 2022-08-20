@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PanAndZoom : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class PanAndZoom : MonoBehaviour
 
     private void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             touchBegin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
