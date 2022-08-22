@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlatformManager : MonoBehaviour
@@ -7,6 +8,8 @@ public class PlatformManager : MonoBehaviour
     public bool isUnlocked = false;
     public Junk[] collectableJunks;
     public float salePrice;
+    [SerializeField] private TextMeshProUGUI ticketTMP;
+    [SerializeField] private TextMeshProUGUI currentMoneyTMP;
 
     private void Awake()
     {
@@ -15,6 +18,24 @@ public class PlatformManager : MonoBehaviour
         {
             isUnlocked = true;
             UnlockPlatform();
+        }
+    }
+
+    private void Update()
+    {
+        if (ticketTMP != null)
+        {
+            ticketTMP.text = "BUY\n$" + salePrice.ToString();
+
+            if (salePrice > float.Parse(currentMoneyTMP.text))
+            {
+                Debug.Log(float.Parse(currentMoneyTMP.text));
+                ticketTMP.color = Color.red;
+            }
+            else
+            {
+                ticketTMP.color = Color.green;
+            }
         }
     }
 

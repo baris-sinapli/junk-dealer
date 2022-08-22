@@ -10,6 +10,7 @@ public class PickElement : MonoBehaviour
 {
     private GameObject _element;
     private GameObject _lastElement = null;
+    private Vector3 position;
     public Junk _elementContent;
 
     [SerializeField] private GameObject Kanvas;
@@ -27,48 +28,47 @@ public class PickElement : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject()) return; // To blocking interaction through UI 
 
-        if (Input.touchCount == 1)
+        if (Input.GetMouseButtonDown(0))
         {
-            Touch touch = Input.GetTouch(0);
-            Vector3 position = touch.position;
+            //Touch touch = Input.GetTouch(0);
+            position = Input.mousePosition;
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            Debug.Log("Touch began!");
+            Ray ray = Camera.main.ScreenPointToRay(position);
+            RaycastHit hitInfo;
 
-            if (touch.phase == TouchPhase.Began)
-            {
-                Debug.Log("Touch began!");
-                Ray ray = Camera.main.ScreenPointToRay(position);
-                RaycastHit hitInfo;
+            if (Physics.Raycast(ray, out hitInfo))
+            { 
+                if(hitInfo.collider.tag == "particle")
+                {
+                    Debug.Log("Particle has been touched!");
+                    _element = hitInfo.collider.gameObject;
 
-                if (Physics.Raycast(ray, out hitInfo))
-                { 
-                    if(hitInfo.collider.tag == "particle")
+                    _element.GetComponentInParent<SpawnManager>().LastSpawnTime((ulong)DateTime.Now.Ticks);
+                    PlayerPrefs.DeleteKey(_element.transform.parent.parent.parent.name + ".SP" + _element.name);
+
+                    _elementContent = _element.GetComponent<JunkContent>().junkContent;
+
+                    Kanvas.transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = _elementContent.junkName;
+                    Kanvas.transform.GetChild(1).GetChild(2).GetComponent<Image>().sprite = _elementContent.junkImage;
+                    Kanvas.transform.GetChild(1).GetChild(4).GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text = _elementContent.baseValue.ToString();
+                    Kanvas.SetActive(true);
+
+                }
+
+
+                if (hitInfo.collider.tag == "platform")
+                {
+                    if (_lastElement != null && _lastElement.transform.GetChild(0) != null)
                     {
-                        Debug.Log("Particle has been touched!");
-                        _element = hitInfo.collider.gameObject;
-
-                        _element.GetComponentInParent<SpawnManager>().LastSpawnTime((ulong)DateTime.Now.Ticks);
-                        PlayerPrefs.DeleteKey(_element.transform.parent.parent.parent.name + ".SP" + _element.name);
-
-                        _elementContent = _element.GetComponent<JunkContent>().junkContent;
-
-                        Kanvas.transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = _elementContent.junkName;
-                        Kanvas.transform.GetChild(1).GetChild(2).GetComponent<Image>().sprite = _elementContent.junkImage;
-                        Kanvas.transform.GetChild(1).GetChild(4).GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text = _elementContent.baseValue.ToString();
-                        Kanvas.SetActive(true);
-
+                        _lastElement.transform.GetChild(0).gameObject.SetActive(false);
                     }
-
-
-                    if (hitInfo.collider.tag == "platform")
-                    {
-                        if (_lastElement != null && _lastElement.transform.GetChild(0) != null)
-                        {
-                            _lastElement.transform.GetChild(0).gameObject.SetActive(false);
-                        }
-                        Debug.Log("Platform "+ hitInfo.collider.name + " has been touched!");
-                        _element = hitInfo.collider.gameObject;
-                        _lastElement = hitInfo.collider.gameObject;
-                        _element.transform.GetChild(0).gameObject.SetActive(true);
-                    }
+                    Debug.Log("Platform "+ hitInfo.collider.name + " has been touched!");
+                    _element = hitInfo.collider.gameObject;
+                    _lastElement = hitInfo.collider.gameObject;
+                    _element.transform.GetChild(0).gameObject.SetActive(true);
                 }
             }
         }

@@ -104,7 +104,7 @@ public class Cleaning : MonoBehaviour {
 
             UpdateSellValue();
         }
-        else
+        else if(!transform.parent.GetComponent<ToggleBrush>().IsBrushActive)
         {
             if (Input.GetMouseButtonDown(0))
             {
