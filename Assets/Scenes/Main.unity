@@ -2366,7 +2366,7 @@ PrefabInstance:
     - target: {fileID: 1848868399269475228, guid: fcfccde5631dd3d4e96fbbca56e9c449,
         type: 3}
       propertyPath: msToWait
-      value: 300000
+      value: 30000
       objectReference: {fileID: 0}
     - target: {fileID: 2220717575419024568, guid: fcfccde5631dd3d4e96fbbca56e9c449,
         type: 3}
@@ -3435,6 +3435,7 @@ GameObject:
   - component: {fileID: 1846289595}
   - component: {fileID: 1846289597}
   - component: {fileID: 1846289596}
+  - component: {fileID: 1846289598}
   m_Layer: 5
   m_Name: Money_Text
   m_TagString: Untagged
@@ -3560,6 +3561,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1846289594}
   m_CullTransparentMesh: 1
+--- !u!114 &1846289598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846289594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 179887bee6583684984c3167113b0eb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1875948571
 GameObject:
   m_ObjectHideFlags: 0

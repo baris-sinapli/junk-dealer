@@ -24,6 +24,7 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
+        ReloadSpawnPoints();
         lastSpawnTime = ulong.Parse(PlayerPrefs.GetString(logPlatformName));
 
     }
@@ -47,12 +48,47 @@ public class SpawnManager : MonoBehaviour
         int randomNum = UnityEngine.Random.Range(0, junkList.Length);
 
         newParticle.transform.parent = gameObject.transform;
-        newParticle.GetComponent<JunkContent>().junkContent = junkList[randomNum];
         
+        newParticle.GetComponent<JunkContent>().junkContent = junkList[randomNum];
+
         spawnPoints.Add(newParticle);
+        newParticle.transform.name = spawnPoints.Count.ToString();
+        SaveSpawnPoint(position, randomNum);
+        
+
         lastSpawnTime = (ulong)DateTime.Now.Ticks;
 
     }
+
+    public void SaveSpawnPoint(Vector3 position, int junkNum)
+    {
+        PlayerPrefs.SetInt("SpawnPointCount", spawnPoints.Count); // Save count of spawn points
+        VectorSave.SetVector3(transform.parent.parent.name + ".SP" + spawnPoints.Count.ToString(), position); // Save the position vector as playerprefs
+        PlayerPrefs.SetInt("JunkContent.SP" + spawnPoints.Count.ToString(), junkNum); // Save the junk content of spawn point
+    }
+
+    private void ReloadSpawnPoints()
+    {
+        int SPCount = PlayerPrefs.GetInt("SpawnPointCount", spawnPoints.Count); // Load count of spawn points
+        
+        for(int i = 0; i < SPCount; i++)
+        {
+            if(PlayerPrefs.HasKey(transform.parent.parent.name + ".SP" + (i+1).ToString()))
+            {
+                // Instantiate - reload the old particle by saved location vector
+                Vector3 positionVector = VectorSave.GetVector3(transform.parent.parent.name + ".SP" + (i + 1).ToString());
+                var oldParticle = Instantiate(ItemPrefab, positionVector, Quaternion.identity);
+                // Reassign the junk content to reloaded particle
+                int junkNum = PlayerPrefs.GetInt("JunkContent.SP" + (i + 1).ToString());
+                oldParticle.GetComponent<JunkContent>().junkContent = junkList[junkNum];
+                // Assign parent object and add to spawnpoints list
+                oldParticle.transform.parent = gameObject.transform;
+                spawnPoints.Add(oldParticle);
+            }
+
+        }
+    }
+
     public void LastSpawnTime(ulong spawnTime)
     {
         lastSpawnTime = spawnTime;

@@ -11,13 +11,13 @@ public static class VectorSave
         PlayerPrefs.SetFloat(key + "Z", value.z);
     }
 
-    public static Vector3 GetVector3(string key, Vector3 defaultValue)
+    public static Vector3 GetVector3(string key)
     {
         Vector3 value;
 
-        value.x = PlayerPrefs.GetFloat(key + "X", defaultValue.x);
-        value.y = PlayerPrefs.GetFloat(key + "Y", defaultValue.y);
-        value.z = PlayerPrefs.GetFloat(key + "Z", defaultValue.z);
+        value.x = PlayerPrefs.GetFloat(key + "X");
+        value.y = PlayerPrefs.GetFloat(key + "Y");
+        value.z = PlayerPrefs.GetFloat(key + "Z");
 
         return value;
     }

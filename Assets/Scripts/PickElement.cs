@@ -10,7 +10,7 @@ public class PickElement : MonoBehaviour
 {
     private GameObject _element;
     private GameObject _lastElement = null;
-    private Junk _elementContent;
+    public Junk _elementContent;
 
     [SerializeField] private GameObject Kanvas;
     
@@ -46,6 +46,7 @@ public class PickElement : MonoBehaviour
                         _element = hitInfo.collider.gameObject;
 
                         _element.GetComponentInParent<SpawnManager>().LastSpawnTime((ulong)DateTime.Now.Ticks);
+                        PlayerPrefs.DeleteKey(_element.transform.parent.parent.parent.name + ".SP" + _element.name);
 
                         _elementContent = _element.GetComponent<JunkContent>().junkContent;
 
