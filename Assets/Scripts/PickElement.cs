@@ -1,13 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PickElement : MonoBehaviour
 {
     private GameObject _element;
     private GameObject _lastElement = null;
+    private Junk _elementContent;
+
     [SerializeField] private GameObject Kanvas;
+    
 
     public GameObject Element { get => _element; set => _element = value; }
 
@@ -38,9 +44,19 @@ public class PickElement : MonoBehaviour
                     {
                         Debug.Log("Particle has been touched!");
                         _element = hitInfo.collider.gameObject;
+
+                        _element.GetComponentInParent<SpawnManager>().LastSpawnTime((ulong)DateTime.Now.Ticks);
+
+                        _elementContent = _element.GetComponent<JunkContent>().junkContent;
+
+                        Kanvas.transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = _elementContent.junkName;
+                        Kanvas.transform.GetChild(1).GetChild(2).GetComponent<Image>().sprite = _elementContent.junkImage;
+                        Kanvas.transform.GetChild(1).GetChild(4).GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text = _elementContent.baseValue.ToString();
                         Kanvas.SetActive(true);
 
                     }
+
+
                     if (hitInfo.collider.tag == "platform")
                     {
                         if (_lastElement != null && _lastElement.transform.GetChild(0) != null)

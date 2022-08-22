@@ -5,6 +5,13 @@ using UnityEngine;
 public class PlatformManager : MonoBehaviour
 {
     public bool isUnlocked = false;
-    public List<Vector3> spawnPoints;
-    public GameObject[] collectableObjects;
+    public Junk[] collectableJunks;
+    public float salePrice;
+
+    public void UnlockPlatform()
+    {
+        transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(1).gameObject.SetActive(false);
+        isUnlocked = true;
+    }
 }
