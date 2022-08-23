@@ -10,11 +10,6 @@ public class PanAndZoom : MonoBehaviour
     [SerializeField] private float zoomOutMax = 6;
     [SerializeField] private float sensitivity = 0.01f;
 
-    private void Start()
-    {
-        
-    }
-
     private void Update()
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
@@ -43,6 +38,7 @@ public class PanAndZoom : MonoBehaviour
             Vector3 direction = touchBegin - Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Camera.main.transform.position += direction;
         }
+        Zoom(Input.GetAxis("Mouse ScrollWheel"));
     }
 
     void Zoom(float increment)
