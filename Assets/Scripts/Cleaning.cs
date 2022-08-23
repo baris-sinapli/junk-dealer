@@ -24,8 +24,11 @@ public class Cleaning : MonoBehaviour {
     private float dirtAmount;
     private Vector2Int lastPaintPixelPosition;
 
+    private GameObject ps;
+
     private void Awake() {
-        
+        ps = Camera.main.transform.GetChild(1).gameObject;
+
         dirtMaskTexture = new Texture2D(dirtMaskTextureBase.width, dirtMaskTextureBase.height);
         dirtMaskTexture.SetPixels(dirtMaskTextureBase.GetPixels());
         dirtMaskTexture.Apply();
@@ -48,7 +51,6 @@ public class Cleaning : MonoBehaviour {
     {
         baseValue = PlayerPrefs.GetFloat("BaseValue", 0);
         price.text = baseValue.ToString("000");
-
         target = transform;
     }
 
@@ -143,8 +145,12 @@ public class Cleaning : MonoBehaviour {
             price.text = (baseValue * 2f).ToString("000");
         else if (completedPercentage <= 90)
             price.text = (baseValue * 2.5f).ToString("000");
-        else if (completedPercentage <= 99)
+        else if (completedPercentage >= 99)
+        {
             price.text = (baseValue * 3f).ToString("000");
+            ps.SetActive(true);
+        }
+            
     }
 
     private float GetDirtAmount() {
